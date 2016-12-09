@@ -1,4 +1,12 @@
 defmodule Heart.Offering do
+  @moduledoc """
+  Provides an Ecto Schema and changeset for an Offering. An Offering represents
+  an individual Product, or set of Products, that exists within an IBM
+  Organization.
+
+  For example, IBM Watson has an Offering called Watson Virtual Agent.
+  """
+
   use Heart.Web, :model
 
   schema "offerings" do

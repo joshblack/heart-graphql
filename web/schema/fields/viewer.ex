@@ -1,4 +1,8 @@
 defmodule Heart.Schema.Fields.Viewer do
+  @moduledoc """
+  Providers the Viewer Field for our Viewer Type.
+  """
+
   use Absinthe.Schema.Notation
 
   object :viewer_field do

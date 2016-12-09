@@ -1,4 +1,8 @@
 defmodule Heart.Schema.Types.Organization do
+  @moduledoc """
+  Provides an Organization Type for use in a GraphQL Schema.
+  """
+
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation
 

@@ -12,4 +12,5 @@ before_script:
   - psql -c 'create database heart_test;' -U postgres
 
 script:
+  - mix credo --strict
   - mix test

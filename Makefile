@@ -1,4 +1,4 @@
-.PHONY: up down
+.PHONY: up down migrate
 
 up:
 	@echo "Starting Development-related services"

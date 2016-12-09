@@ -1,4 +1,10 @@
 defmodule Heart.Schema do
+  @moduledoc """
+  The GraphQL Schema for Heart that imports all the Types, Fields, and Mutations
+  and imports the specific fields from each for our Root Query Type and Root
+  Mutation Type.
+  """
+
   use Absinthe.Schema
   use Absinthe.Relay.Schema
 

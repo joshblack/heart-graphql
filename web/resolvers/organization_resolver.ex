@@ -1,4 +1,8 @@
 defmodule Heart.Resolver.Organization do
+  @moduledoc """
+  Provides the necessary resolvers for various Offering-related fields.
+  """
+
   alias Heart.Repo
   alias Heart.Organization
 

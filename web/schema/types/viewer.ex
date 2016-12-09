@@ -1,4 +1,10 @@
 defmodule Heart.Schema.Types.Viewer do
+  @moduledoc """
+  Provides a Root Viewer Type for use in a GraphQL Schema. This is helpful when
+  working with Relay-specific clients since fragments will be based off of this
+  Viewer Type.
+  """
+
   # Provides us with a DSL for defining GraphQL Types
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation
@@ -6,19 +12,22 @@ defmodule Heart.Schema.Types.Viewer do
   # Enable helpers for batching associated requests
   use Absinthe.Ecto, repo: Heart.Repo
 
+  alias Heart.Resolver.Organization
+  alias Heart.Resolver.Offering
+
   object :viewer do
     connection field :organizations, node_type: :organization do
-      resolve &Heart.Resolver.Organization.all/2
+      resolve &Organization.all/2
     end
 
     connection field :offerings, node_type: :offering do
-      resolve &Heart.Resolver.Offering.all/2
+      resolve &Offering.all/2
     end
 
     field :offering, type: :offering do
       arg :id, non_null(:id)
 
-      (&Heart.Resolver.Offering.find/2)
+      (&Offering.find/2)
       |> parsing_node_ids(id: :offering)
       |> resolve()
     end

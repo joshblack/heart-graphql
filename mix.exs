@@ -43,7 +43,7 @@ defmodule Heart.Mixfile do
       {:absinthe_ecto, git: "https://github.com/absinthe-graphql/absinthe_ecto.git"},
       {:absinthe_relay, "~> 1.2.0"},
       {:poison, "~> 2.1.0"},
-      {:faker, "~> 0.7"},
+      {:credo, "~> 0.5", only: [:dev, :test]},
     ]
   end
 
