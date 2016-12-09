@@ -1,0 +1,12 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+    environment:
+      - MIX_ENV=prod
+      - HOST=0.0.0.0
+      - PORT=4000
