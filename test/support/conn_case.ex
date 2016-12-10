@@ -26,6 +26,7 @@ defmodule Heart.ConnCase do
       import Ecto.Query
 
       import Heart.Router.Helpers
+      import Heart.Factory
 
       # The default endpoint for testing
       @endpoint Heart.Endpoint

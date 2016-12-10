@@ -10,6 +10,7 @@ defmodule Heart.Resolver.Offering do
   # TODO: Remove `inspect` calls to changeset when Absinthe v1.2.2 lands
   def all(pagination_args, _) do
     case Repo.all(Offering) do
+      nil -> {:error, "Something went wrong"}
       offerings ->
         # Note: the client _has_ to include connection arguments otherwise
         # this throws
@@ -19,7 +20,6 @@ defmodule Heart.Resolver.Offering do
         )
 
         {:ok, connection}
-      nil -> {:error, "Something went wrong"}
     end
   end
 
@@ -34,8 +34,8 @@ defmodule Heart.Resolver.Offering do
 
   def find(%{id: id}, _info) do
     case Repo.get(Offering, id) do
-      offering -> {:ok, offering}
       nil -> not_found(id)
+      offering -> {:ok, offering}
     end
   end
 

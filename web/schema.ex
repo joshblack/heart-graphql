@@ -18,10 +18,7 @@ defmodule Heart.Schema do
   end
 
   mutation do
-    # create_resource_mutation
-    # edit_resource_mutation
-    # delete_resource_mutation
-
+    import_fields :organization_mutations
     import_fields :offering_mutations
   end
 end

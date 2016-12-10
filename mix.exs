@@ -44,6 +44,7 @@ defmodule Heart.Mixfile do
       {:absinthe_relay, "~> 1.2.0"},
       {:poison, "~> 2.1.0"},
       {:credo, "~> 0.5", only: [:dev, :test]},
+      {:ex_machina, "~> 1.0", only: [:test]},
     ]
   end
 

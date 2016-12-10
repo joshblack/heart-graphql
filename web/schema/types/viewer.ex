@@ -20,6 +20,14 @@ defmodule Heart.Schema.Types.Viewer do
       resolve &Organization.all/2
     end
 
+    field :organization, type: :organization do
+      arg :id, non_null(:id)
+
+      (&Organization.find/2)
+      |> parsing_node_ids(id: :organization)
+      |> resolve()
+    end
+
     connection field :offerings, node_type: :offering do
       resolve &Offering.all/2
     end
