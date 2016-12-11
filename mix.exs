@@ -20,7 +20,8 @@ defmodule Heart.Mixfile do
     [mod: {Heart, []},
      applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :absinthe, :absinthe_plug,
-                    :absinthe_ecto, :poison, :absinthe_relay, :ex_machina]]
+                    :absinthe_ecto, :poison, :absinthe_relay, :ex_machina,
+                    :faker]]
   end
 
   # Specifies which paths to compile per environment.
@@ -47,6 +48,7 @@ defmodule Heart.Mixfile do
       {:poison, "~> 2.1.0"},
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:ex_machina, "~> 1.0", only: [:dev, :test]},
+      {:faker, "~> 0.7", only: [:dev, :test]},
     ]
   end
 

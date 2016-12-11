@@ -12,6 +12,7 @@ defmodule Heart.Offering do
   schema "offerings" do
     field :name, :string
     field :description, :string
+    has_many :goals, Heart.Goal
     belongs_to :organization, Heart.Organization
 
     timestamps()

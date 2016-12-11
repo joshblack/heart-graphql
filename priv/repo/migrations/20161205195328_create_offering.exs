@@ -5,7 +5,7 @@ defmodule Heart.Repo.Migrations.CreateOffering do
     create table(:offerings, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :name, :string
-      add :description, :string
+      add :description, :text
       add :organization_id, references(:organizations, on_delete: :nothing, type: :binary_id)
 
       timestamps()
