@@ -3,7 +3,8 @@ defmodule Heart.Resolver.Offering do
   Provides the necessary resolvers for various Offering-related fields.
   """
 
-  alias Heart.Repo
+  use Heart.Web, :resolver
+
   alias Heart.Offering
   alias Absinthe.Relay.Connection
 

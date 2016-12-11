@@ -58,8 +58,11 @@ defmodule Heart.Web do
 
   def type do
     quote do
+      # Provides us with a DSL for defining GraphQL Types
       use Absinthe.Schema.Notation
       use Absinthe.Relay.Schema.Notation
+
+      # Enable helpers for batching associated requests
       use Absinthe.Ecto, repo: Heart.Repo
     end
   end

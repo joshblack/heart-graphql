@@ -5,8 +5,7 @@ defmodule Heart.Schema.Types.Node do
   id.
   """
 
-  use Absinthe.Schema.Notation
-  use Absinthe.Relay.Schema.Notation
+  use Heart.Web, :type
 
   node interface do
     resolve_type fn

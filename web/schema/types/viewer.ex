@@ -5,12 +5,7 @@ defmodule Heart.Schema.Types.Viewer do
   Viewer Type.
   """
 
-  # Provides us with a DSL for defining GraphQL Types
-  use Absinthe.Schema.Notation
-  use Absinthe.Relay.Schema.Notation
-
-  # Enable helpers for batching associated requests
-  use Absinthe.Ecto, repo: Heart.Repo
+  use Heart.Web, :type
 
   alias Heart.Resolver.Organization
   alias Heart.Resolver.Offering

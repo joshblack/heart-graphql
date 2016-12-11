@@ -3,9 +3,7 @@ defmodule Heart.Schema.Types.Offering do
   Provides an Offering Type for use in a GraphQL Schema.
   """
 
-  use Absinthe.Schema.Notation
-  use Absinthe.Relay.Schema.Notation
-  use Absinthe.Ecto, repo: Heart.Repo
+  use Heart.Web, :type
 
   @desc """
   An offering that exists within an IBM organization. For example, Watson

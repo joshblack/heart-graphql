@@ -4,7 +4,7 @@ defmodule Heart.Schema.Types do
   Queries, Mutations, and Subscriptions.
   """
 
-  use Absinthe.Schema.Notation
+  use Heart.Web, :type
 
   import_types Heart.Schema.Types.Node
   import_types Heart.Schema.Types.Viewer
