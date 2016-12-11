@@ -56,6 +56,22 @@ defmodule Heart.Web do
     end
   end
 
+  def type do
+    quote do
+      use Absinthe.Schema.Notation
+      use Absinthe.Relay.Schema.Notation
+      use Absinthe.Ecto, repo: Heart.Repo
+    end
+  end
+
+  def resolver do
+    quote do
+      alias Heart.Repo
+      import Ecto
+      import Ecto.Query
+    end
+  end
+
   def router do
     quote do
       use Phoenix.Router
