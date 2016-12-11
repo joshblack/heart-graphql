@@ -39,27 +39,27 @@ defmodule Heart.Resolver.Offering do
     end
   end
 
-  def update(%{id: id, offering: offering_params}, _info) do
-    case Repo.get(Offering, id) do
-      {:ok, offering} ->
-        changeset = Offering.changeset(offering, offering_params)
+  def update(args, _info) do
+    case Repo.get(Offering, args.id) do
+      nil -> not_found(args.id)
+      offering ->
+        changeset = Offering.changeset(offering, args)
 
         case Repo.update(changeset) do
-          {:ok, offering} -> {:ok, offering}
+          {:ok, offering} -> {:ok, %{offering: offering}}
           {:error, changeset} -> {:error, inspect(changeset)}
         end
-      nil -> not_found(id)
     end
   end
 
-  def delete(%{id: id}, _info) do
-    case Repo.get(Offering, id) do
-      {:ok, offering} ->
+  def delete(args, _info) do
+    case Repo.get(Offering, args.id) do
+      nil -> not_found(args.id)
+      offering ->
         case Repo.delete(offering) do
-          {:ok, offering} -> {:ok, offering}
+          {:ok, offering} -> {:ok, %{offering: offering}}
           {:error, changeset} -> {:error, inspect(changeset)}
         end
-      nil -> not_found(id)
     end
   end
 

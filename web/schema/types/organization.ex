@@ -3,10 +3,9 @@ defmodule Heart.Schema.Types.Organization do
   Provides an Organization Type for use in a GraphQL Schema.
   """
 
-  use Absinthe.Schema.Notation
-  use Absinthe.Relay.Schema.Notation
+  use Heart.Web, :type
 
-  use Absinthe.Ecto, repo: Heart.Repo
+  alias Heart.Resolver.Organization
 
   @desc """
   An organization that exists within IBM. For example, IBM Watson or Analytics.
@@ -19,7 +18,9 @@ defmodule Heart.Schema.Types.Organization do
     field :description, :string
 
     @desc "The offerings that fall under this organization."
-    field :offerings, list_of(:offering), resolve: assoc(:offerings)
+    connection field :offerings, node_type: :offering do
+      resolve &Organization.offerings/2
+    end
   end
 
   connection node_type: :organization

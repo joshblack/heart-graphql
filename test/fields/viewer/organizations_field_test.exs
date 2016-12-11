@@ -5,22 +5,22 @@ defmodule Heart.OrganizationsFieldTest do
     conn = build_conn()
     org = insert(:organization)
 
-    conn = post conn, "/graphql", %{
-      query: """
-      query viewerQuery {
-        viewer {
-          organizations(first: 5) {
-            edges {
-              node {
-                name
-                description
-              }
+    query = """
+    {
+      viewer {
+        organizations(first: 5) {
+          edges {
+            node {
+              name
+              description
             }
           }
         }
       }
-      """,
     }
+    """
+
+    conn = post conn, "/graphql", %{query: query}
 
     assert json_response(conn, 200) == %{
       "data" => %{
@@ -30,13 +30,13 @@ defmodule Heart.OrganizationsFieldTest do
               %{
                 "node" => %{
                   "name" => org.name,
-                  "description" => org.description
-                }
-              }
-            ]
-          }
-        }
-      }
+                  "description" => org.description,
+                },
+              },
+            ],
+          },
+        },
+      },
     }
   end
 end

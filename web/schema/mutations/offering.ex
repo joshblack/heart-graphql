@@ -25,5 +25,37 @@ defmodule Heart.Schema.Mutations.Offering do
       |> parsing_node_ids(organization_id: :organization)
       |> resolve()
     end
+
+    payload field :update_offering do
+      input do
+        field :id, non_null(:id)
+        field :name, :string
+        field :description, :string
+        field :organization_id, non_null(:id)
+      end
+
+      output do
+        field :offering, :offering
+      end
+
+      (&Offering.update/2)
+      |> parsing_node_ids(id: :offering)
+      |> parsing_node_ids(organization_id: :organization)
+      |> resolve()
+    end
+
+    payload field :remove_offering do
+      input do
+        field :id, non_null(:id)
+      end
+
+      output do
+        field :offering, :offering
+      end
+
+      (&Offering.delete/2)
+      |> parsing_node_ids(id: :offering)
+      |> resolve()
+    end
   end
 end

@@ -1,4 +1,4 @@
-defmodule Heart.CreateOfferingMutationTest do
+defmodule Heart.CreateOfferingTest do
   use Heart.ConnCase
 
   alias Absinthe.Relay.Node
@@ -37,8 +37,8 @@ defmodule Heart.CreateOfferingMutationTest do
       "data" => %{
         "createOffering" => %{
           "offering" => %{
-            "name" => "New Offering",
-            "description" => "Offering description.",
+            "name" => variables.input.name,
+            "description" => variables.input.description,
             "organization" => %{
               "id" => global_id,
             },

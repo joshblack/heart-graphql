@@ -3,9 +3,9 @@ defmodule Heart.Resolver.Organization do
   Provides the necessary resolvers for various organization-related fields.
   """
 
-  alias Heart.Repo
-  alias Heart.Organization
+  use Heart.Web, :resolver
 
+  alias Heart.Organization
   alias Absinthe.Relay.Connection
 
   def all(pagination_args, _) do
@@ -64,6 +64,15 @@ defmodule Heart.Resolver.Organization do
           {:error, changeset} -> {:error, inspect(changeset)}
         end
     end
+  end
+
+  def offerings(pagination_args, %{source: organization}) do
+    connection =
+      organization
+      |> Ecto.assoc(:offerings)
+      |> Connection.from_query(&Repo.all/1, pagination_args)
+
+    {:ok, connection}
   end
 
   defp not_found(id) do
