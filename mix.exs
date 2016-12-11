@@ -20,12 +20,14 @@ defmodule Heart.Mixfile do
     [mod: {Heart, []},
      applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :absinthe, :absinthe_plug,
-                    :absinthe_ecto, :poison, :absinthe_relay]]
+                    :absinthe_ecto, :poison, :absinthe_relay, :ex_machina]]
   end
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
-  defp elixirc_paths(_),     do: ["lib", "web"]
+
+  # Include our `factory` definitions for seeding
+  defp elixirc_paths(_),     do: ["lib", "web", "test/support/factory.ex"]
 
   # Specifies your project dependencies.
   #
@@ -44,7 +46,7 @@ defmodule Heart.Mixfile do
       {:absinthe_relay, "~> 1.2.0"},
       {:poison, "~> 2.1.0"},
       {:credo, "~> 0.5", only: [:dev, :test]},
-      {:ex_machina, "~> 1.0", only: [:test]},
+      {:ex_machina, "~> 1.0", only: [:dev, :test]},
     ]
   end
 

@@ -9,17 +9,35 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
-alias Heart.Organization
-alias Heart.Offering
-alias Heart.Repo
 
-org1 = Repo.insert!(%Organization{name: "IBM Watson", description: "An organization in IBM"})
-org2 = Repo.insert!(%Organization{name: "IBM Analytics", description: "An organization in IBM"})
+defmodule Heart.Seeds do
+  @moduledoc """
+  Create a Custom Seeds module to utilize our Factories defined through
+  ExMachina and Seed our Database that way.
+  """
 
-for _ <- 1..10 do
-  Repo.insert!(%Offering{
-    name: Faker.Company.name,
-    description: Faker.Lorem.sentence,
-    organization_id: [org1.id, org2.id] |> Enum.take_random(1) |> hd
-  })
+  use ExMachina.Ecto, repo: Heart.Repo
+
+  import Heart.Factory
+
+  alias Heart.Factory
+
+  @num_organizations 5
+  @num_offerings 15
+
+  def seed do
+    offerings
+    |> Enum.chunk(@num_offerings)
+    |> Enum.each(fn offering_slice ->
+      Factory.insert(:organization, %{
+        offerings: offering_slice,
+      })
+    end)
+  end
+
+  def offerings do
+    Factory.build_list(@num_offerings * @num_organizations, :offering)
+  end
 end
+
+Heart.Seeds.seed()

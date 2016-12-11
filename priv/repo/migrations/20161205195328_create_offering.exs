@@ -3,10 +3,10 @@ defmodule Heart.Repo.Migrations.CreateOffering do
 
   def change do
     create table(:offerings, primary_key: false) do
-      add :id, :uuid, primary_key: true
+      add :id, :binary_id, primary_key: true
       add :name, :string
       add :description, :string
-      add :organization_id, references(:organizations, on_delete: :nothing, type: :uuid)
+      add :organization_id, references(:organizations, on_delete: :nothing, type: :binary_id)
 
       timestamps()
     end

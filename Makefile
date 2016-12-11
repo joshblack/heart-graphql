@@ -12,3 +12,9 @@ migrate:
 	mix ecto.create
 	mix ecto.migrate
 	mix run priv/repo/seeds.exs
+
+seed:
+	mix ecto.drop
+	mix ecto.create
+	mix ecto.migrate
+	mix run priv/repo/seeds.exs
