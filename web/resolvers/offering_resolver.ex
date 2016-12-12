@@ -8,22 +8,6 @@ defmodule Heart.Resolver.Offering do
   alias Heart.Offering
   alias Absinthe.Relay.Connection
 
-  # TODO: Remove `inspect` calls to changeset when Absinthe v1.2.2 lands
-  def all(pagination_args, _) do
-    case Repo.all(Offering) do
-      nil -> {:error, "Something went wrong"}
-      offerings ->
-        # Note: the client _has_ to include connection arguments otherwise
-        # this throws
-        connection = Connection.from_list(
-          offerings,
-          pagination_args
-        )
-
-        {:ok, connection}
-    end
-  end
-
   def create(args, _info) do
     changeset = Offering.changeset(%Offering{}, args)
 
@@ -62,6 +46,15 @@ defmodule Heart.Resolver.Offering do
           {:error, changeset} -> {:error, inspect(changeset)}
         end
     end
+  end
+
+  def goals(pagination_args, %{source: offering}) do
+    connection =
+      offering
+      |> Ecto.assoc(:goals)
+      |> Connection.from_query(&Repo.all/1, pagination_args)
+
+    {:ok, connection}
   end
 
   defp not_found(id) do

@@ -8,4 +8,5 @@ defmodule Heart.Schema.Mutations do
 
   import_types Heart.Schema.Mutations.Organization
   import_types Heart.Schema.Mutations.Offering
+  import_types Heart.Schema.Mutations.Goal
 end

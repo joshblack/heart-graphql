@@ -9,6 +9,7 @@ defmodule Heart.Schema.Types.Viewer do
 
   alias Heart.Resolver.Organization
   alias Heart.Resolver.Offering
+  alias Heart.Resolver.Goal
 
   object :viewer do
     connection field :organizations, node_type: :organization do
@@ -23,15 +24,19 @@ defmodule Heart.Schema.Types.Viewer do
       |> resolve()
     end
 
-    connection field :offerings, node_type: :offering do
-      resolve &Offering.all/2
-    end
-
     field :offering, type: :offering do
       arg :id, non_null(:id)
 
       (&Offering.find/2)
       |> parsing_node_ids(id: :offering)
+      |> resolve()
+    end
+
+    field :goal, type: :goal do
+      arg :id, non_null(:id)
+
+      (&Goal.find/2)
+      |> parsing_node_ids(id: :goal)
       |> resolve()
     end
   end

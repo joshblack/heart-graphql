@@ -3,7 +3,7 @@ defmodule Heart.OrganizationOfferingsFieldTest do
 
   alias Absinthe.Relay.Node
 
-  test "#organizations:offerings provides a Relay Connection" do
+  test "#organization:offerings provides a Relay Connection" do
     conn = build_conn()
     num_offerings = 3
     org = insert(:organization, %{

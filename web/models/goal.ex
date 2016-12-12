@@ -20,8 +20,8 @@ defmodule Heart.Goal do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :description])
-    |> validate_required([:title, :description])
+    |> cast(params, [:title, :description, :offering_id])
+    |> validate_required([:title, :description, :offering_id])
     |> foreign_key_constraint(:offering_id)
   end
 end

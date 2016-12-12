@@ -11,6 +11,7 @@ defmodule Heart.Schema.Types.Node do
     resolve_type fn
       %Heart.Offering{}, _ -> :offering
       %Heart.Organization{}, _ -> :organization
+      %Heart.Goal{}, _ -> :goal
       _, _ -> nil
     end
   end
