@@ -12,6 +12,7 @@ defmodule Heart.Schema.Types.Node do
       %Heart.Offering{}, _ -> :offering
       %Heart.Organization{}, _ -> :organization
       %Heart.Goal{}, _ -> :goal
+      %Heart.Signal{}, _ -> :signal
       _, _ -> nil
     end
   end

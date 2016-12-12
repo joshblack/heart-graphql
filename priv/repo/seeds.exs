@@ -24,6 +24,8 @@ defmodule Heart.Seeds do
 
   @num_organizations 5
   @num_offerings 15
+  @num_goals 5
+  @num_signals 10
 
   def seed do
     offerings
@@ -37,7 +39,13 @@ defmodule Heart.Seeds do
 
   def offerings do
     Factory.build_list(@num_offerings * @num_organizations, :offering, %{
-      goals: Factory.build_list(5, :goal)
+      goals: goals
+    })
+  end
+
+  def goals do
+    Factory.build_list(@num_goals, :goal, %{
+      signals: Factory.build_list(@num_signals, :signal)
     })
   end
 end

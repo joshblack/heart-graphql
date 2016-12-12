@@ -3,7 +3,7 @@ defmodule Heart.GoalFieldTest do
 
   alias Absinthe.Relay.Node
 
-  test "#goal provides a Goal under an Offering" do
+  test "#goal provides a Goal under an Offering by id" do
     conn = build_conn()
     goal = insert(:goal, %{
       offering: build(:offering_organization),

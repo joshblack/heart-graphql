@@ -21,5 +21,6 @@ defmodule Heart.Schema do
     import_fields :organization_mutations
     import_fields :offering_mutations
     import_fields :goal_mutations
+    import_fields :signal_mutations
   end
 end

@@ -10,6 +10,7 @@ defmodule Heart.Goal do
   schema "goals" do
     field :title, :string
     field :description, :string
+    has_many :signals, Heart.Signal
     belongs_to :offering, Heart.Offering
 
     timestamps()

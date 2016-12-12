@@ -6,6 +6,7 @@ defmodule Heart.Resolver.Goal do
   use Heart.Web, :resolver
 
   alias Heart.Goal
+  alias Absinthe.Relay.Connection
 
   def create(args, _info) do
     changeset = Goal.changeset(%Goal{}, args)
@@ -45,6 +46,15 @@ defmodule Heart.Resolver.Goal do
           {:error, changeset} -> {:error, inspect(changeset)}
         end
     end
+  end
+
+  def signals(pagination_args, %{source: goal}) do
+    connection =
+      goal
+      |> Ecto.assoc(:signals)
+      |> Connection.from_query(&Repo.all/1, pagination_args)
+
+    {:ok, connection}
   end
 
   defp not_found(id) do

@@ -4,6 +4,7 @@ defmodule Heart.Factory do
   alias Heart.Organization
   alias Heart.Offering
   alias Heart.Goal
+  alias Heart.Signal
 
   def organization_factory do
     %Organization{
@@ -13,14 +14,14 @@ defmodule Heart.Factory do
   end
 
   def offering_factory do
-    %Offering {
+    %Offering{
       name: sequence("Offering"),
       description: Faker.Lorem.paragraph(),
     }
   end
 
   def offering_organization_factory do
-    %Offering {
+    %Offering{
       name: sequence("Offering"),
       description: Faker.Lorem.paragraph(),
       organization: build(:organization),
@@ -28,7 +29,14 @@ defmodule Heart.Factory do
   end
 
   def goal_factory do
-    %Goal {
+    %Goal{
+      title: Faker.Lorem.sentence(),
+      description: Faker.Lorem.paragraph(),
+    }
+  end
+
+  def signal_factory do
+    %Signal{
       title: Faker.Lorem.sentence(),
       description: Faker.Lorem.paragraph(),
     }
