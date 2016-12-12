@@ -6,6 +6,7 @@ defmodule Heart.Resolver.Signal do
   use Heart.Web, :resolver
 
   alias Heart.Signal
+  alias Absinthe.Relay.Connection
 
   def find(%{id: id}, _info) do
     case Repo.get(Signal, id) do
@@ -45,6 +46,15 @@ defmodule Heart.Resolver.Signal do
           {:error, changeset} -> {:error, inspect(changeset)}
         end
     end
+  end
+
+  def metrics(pagination_args, %{source: signal}) do
+    connection =
+      signal
+      |> Ecto.assoc(:metrics)
+      |> Connection.from_query(&Repo.all/1, pagination_args)
+
+    {:ok, connection}
   end
 
   defp not_found(id) do

@@ -3,7 +3,7 @@ defmodule Heart.GoalsSignalsFieldTest do
 
   alias Absinthe.Relay.Node
 
-  test "#goals:signals provides a Relay Connection" do
+  test "#goal:signals provides a Relay Connection" do
     conn = build_conn()
     num_signals = 3
     goal = insert(:goal, %{

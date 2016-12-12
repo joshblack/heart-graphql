@@ -11,6 +11,7 @@ defmodule Heart.Signal do
     field :title, :string
     field :description, :string
     belongs_to :goal, Heart.Goal
+    has_many :metrics, Heart.Metric
 
     timestamps()
   end

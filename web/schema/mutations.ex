@@ -10,4 +10,5 @@ defmodule Heart.Schema.Mutations do
   import_types Heart.Schema.Mutations.Offering
   import_types Heart.Schema.Mutations.Goal
   import_types Heart.Schema.Mutations.Signal
+  import_types Heart.Schema.Mutations.Metric
 end

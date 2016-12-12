@@ -5,6 +5,7 @@ defmodule Heart.Factory do
   alias Heart.Offering
   alias Heart.Goal
   alias Heart.Signal
+  alias Heart.Metric
 
   def organization_factory do
     %Organization{
@@ -39,6 +40,14 @@ defmodule Heart.Factory do
     %Signal{
       title: Faker.Lorem.sentence(),
       description: Faker.Lorem.paragraph(),
+    }
+  end
+
+  def metric_factory do
+    %Metric{
+      name: sequence("metric"),
+      description: Faker.Lorem.paragraph(),
+      target: 25.0,
     }
   end
 end

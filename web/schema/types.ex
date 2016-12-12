@@ -12,4 +12,5 @@ defmodule Heart.Schema.Types do
   import_types Heart.Schema.Types.Offering
   import_types Heart.Schema.Types.Goal
   import_types Heart.Schema.Types.Signal
+  import_types Heart.Schema.Types.Metric
 end

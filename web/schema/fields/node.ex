@@ -11,6 +11,7 @@ defmodule Heart.Schema.Fields.Node do
   alias Heart.Resolver.Organization
   alias Heart.Resolver.Goal
   alias Heart.Resolver.Signal
+  alias Heart.Resolver.Metric
 
   object :node_field do
     node field do
@@ -23,6 +24,8 @@ defmodule Heart.Schema.Fields.Node do
           Goal.find(%{id: id}, %{})
         %{type: :signal, id: id}, _ ->
           Signal.find(%{id: id}, %{})
+        %{type: :metric, id: id}, _ ->
+          Metric.find(%{id: id}, %{})
         _, _ ->
           nil
       end

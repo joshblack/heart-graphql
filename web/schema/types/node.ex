@@ -13,6 +13,7 @@ defmodule Heart.Schema.Types.Node do
       %Heart.Organization{}, _ -> :organization
       %Heart.Goal{}, _ -> :goal
       %Heart.Signal{}, _ -> :signal
+      %Heart.Metric{}, _ -> :metric
       _, _ -> nil
     end
   end
