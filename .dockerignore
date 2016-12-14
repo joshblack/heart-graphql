@@ -1,0 +1,16 @@
+# App artifacts
+_build
+/db
+deps
+/*.ez
+
+# Generated on crash by the VM
+erl_crash.dump
+
+# Docker Volume
+data
+
+# Project files
+README.md
+.travis.yml
+Makefile

@@ -1,11 +1,24 @@
 version: '2'
 services:
+  web:
+    build:
+      context: ../../
+      dockerfile: ci/dev/Dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+    environment:
+      - HOST=0.0.0.0
+      - PORT=4000
+      - POSTGRES_HOSTNAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
   postgres:
     image: postgres:9.6.1
     ports:
       - "5432:5432"
-    volumes:
-      - ../../data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=heart_dev

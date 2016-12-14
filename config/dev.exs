@@ -24,7 +24,9 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :heart, Heart.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  database: "heart_dev",
-  hostname: "localhost",
+  hostname: System.get_env("POSTGRES_HOSTNAME") || "localhost",
+  username: System.get_env("POSTGRES_USER") || "postgres",
+  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
+  database: System.get_env("POSTGRES_DATABASE") || "heart_dev",
+  port: System.get_env("POSTGRES_PORT") || 5432,
   pool_size: 10
