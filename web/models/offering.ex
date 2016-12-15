@@ -12,6 +12,7 @@ defmodule Heart.Offering do
   schema "offerings" do
     field :name, :string
     field :description, :string
+    field :slug, :string
     has_many :goals, Heart.Goal
     belongs_to :organization, Heart.Organization
 
@@ -23,8 +24,9 @@ defmodule Heart.Offering do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :description, :organization_id])
-    |> validate_required([:name, :description, :organization_id])
+    |> cast(params, [:name, :description, :organization_id], [:slug])
+    |> slugify_name()
+    |> validate_required([:name, :description, :slug, :organization_id])
     |> unique_constraint(:name)
     |> foreign_key_constraint(:organization_id)
   end

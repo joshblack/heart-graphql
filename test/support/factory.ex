@@ -11,6 +11,7 @@ defmodule Heart.Factory do
     %Organization{
       name: sequence("Organization"),
       description: Faker.Lorem.paragraph(),
+      slug: sequence("organization"),
     }
   end
 
@@ -18,6 +19,7 @@ defmodule Heart.Factory do
     %Offering{
       name: sequence("Offering"),
       description: Faker.Lorem.paragraph(),
+      slug: sequence("offering"),
     }
   end
 
@@ -25,21 +27,30 @@ defmodule Heart.Factory do
     %Offering{
       name: sequence("Offering"),
       description: Faker.Lorem.paragraph(),
+      slug: sequence("offering"),
       organization: build(:organization),
     }
   end
 
   def goal_factory do
+    title = Faker.Lorem.sentence()
+    slug = Slugger.slugify_downcase(title)
+
     %Goal{
-      title: Faker.Lorem.sentence(),
+      title: title,
       description: Faker.Lorem.paragraph(),
+      slug: slug,
     }
   end
 
   def signal_factory do
+    title = Faker.Lorem.sentence()
+    slug = Slugger.slugify_downcase(title)
+
     %Signal{
-      title: Faker.Lorem.sentence(),
+      title: title,
       description: Faker.Lorem.paragraph(),
+      slug: slug,
     }
   end
 
@@ -48,6 +59,7 @@ defmodule Heart.Factory do
       name: sequence("metric"),
       description: Faker.Lorem.paragraph(),
       target: 25.0,
+      slug: sequence("metric"),
     }
   end
 end

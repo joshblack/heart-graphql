@@ -13,13 +13,16 @@ defmodule Heart.Schema.Types.Offering do
   """
   node object :offering do
     @desc "The name of the offering."
-    field :name, :string
+    field :name, non_null(:string)
 
     @desc "The description for the offering."
-    field :description, :string
+    field :description, non_null(:string)
+
+    @desc "The slug for the offering URL."
+    field :slug, non_null(:string)
 
     @desc "The organization that the offering belongs to."
-    field :organization, :organization, resolve: assoc(:organization)
+    field :organization, non_null(:organization), resolve: assoc(:organization)
 
     @desc "The goals that fall under an offering."
     connection field :goals, node_type: :goal do

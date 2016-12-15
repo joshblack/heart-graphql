@@ -26,6 +26,22 @@ defmodule Heart.Web do
 
       @primary_key {:id, :binary_id, autogenerate: true}
       @foreign_key_type :binary_id
+
+      defp slugify_name(changeset) do
+        if name = get_change(changeset, :name) do
+          put_change(changeset, :slug, Slugger.slugify_downcase(name))
+        else
+          changeset
+        end
+      end
+
+      defp slugify_title(changeset) do
+        if title = get_change(changeset, :title) do
+          put_change(changeset, :slug, Slugger.slugify_downcase(title))
+        else
+          changeset
+        end
+      end
     end
   end
 

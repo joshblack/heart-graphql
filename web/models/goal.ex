@@ -10,6 +10,7 @@ defmodule Heart.Goal do
   schema "goals" do
     field :title, :string
     field :description, :string
+    field :slug, :string
     has_many :signals, Heart.Signal
     belongs_to :offering, Heart.Offering
 
@@ -21,8 +22,9 @@ defmodule Heart.Goal do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :description, :offering_id])
-    |> validate_required([:title, :description, :offering_id])
+    |> cast(params, [:title, :description, :offering_id], [:slug])
+    |> slugify_title()
+    |> validate_required([:title, :description, :slug, :offering_id])
     |> foreign_key_constraint(:offering_id)
   end
 end

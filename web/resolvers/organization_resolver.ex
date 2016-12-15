@@ -31,6 +31,10 @@ defmodule Heart.Resolver.Organization do
     end
   end
 
+  def find(_args, _info) do
+    {:error, "No arguments supplied for `id` or `slug`."}
+  end
+
   def create(args, _info) do
     changeset = Organization.changeset(%Organization{}, args)
 

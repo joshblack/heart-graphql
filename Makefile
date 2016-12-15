@@ -2,7 +2,7 @@
 
 up:
 	@echo "Starting Development-related services"
-	docker-compose -f ci/dev/docker-compose.yml up -d --build
+	docker-compose -f ci/dev/docker-compose.yml up -d
 
 down:
 	@echo "Stop Development-related services"
@@ -24,4 +24,4 @@ seed:
 	docker-compose -f ci/dev/docker-compose.yml exec web mix run priv/repo/seeds.exs
 
 schema:
-	docker-compose -f ci/dev/docker-compose.yml exec web mix absinthe.schema.json ${OUTPUT_DIR} --pretty
+	 mix absinthe.schema.json ${OUTPUT_DIR} --pretty

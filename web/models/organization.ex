@@ -12,6 +12,7 @@ defmodule Heart.Organization do
   schema "organizations" do
     field :name, :string
     field :description, :string
+    field :slug, :string
     has_many :offerings, Heart.Offering
 
     timestamps()
@@ -22,8 +23,10 @@ defmodule Heart.Organization do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :description])
-    |> validate_required([:name, :description])
+    |> cast(params, [:name, :description], [:slug])
+    |> slugify_name()
+    |> validate_required([:name, :description, :slug])
     |> unique_constraint(:name)
+    |> unique_constraint(:slug)
   end
 end

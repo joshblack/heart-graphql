@@ -9,6 +9,7 @@ defmodule Heart.Metric do
     field :name, :string
     field :description, :string
     field :target, :float
+    field :slug, :string
     belongs_to :signal, Heart.Signal
 
     timestamps()
@@ -19,7 +20,8 @@ defmodule Heart.Metric do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :description, :target, :signal_id])
-    |> validate_required([:name, :description, :target, :signal_id])
+    |> cast(params, [:name, :description, :target, :signal_id], [:slug])
+    |> slugify_name()
+    |> validate_required([:name, :description, :target, :slug, :signal_id])
   end
 end

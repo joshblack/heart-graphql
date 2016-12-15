@@ -15,6 +15,9 @@ defmodule Heart.Schema.Types.Metric do
     @desc "The target number for the metric."
     field :target, non_null(:float)
 
+    @desc "The slug for the metric URL."
+    field :slug, non_null(:string)
+
     @desc "The signal that the metric belongs to."
     field :signal, non_null(:signal), resolve: assoc(:signal)
   end

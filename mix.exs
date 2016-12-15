@@ -49,6 +49,7 @@ defmodule Heart.Mixfile do
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:ex_machina, "~> 1.0"},
       {:faker, "~> 0.7"},
+      {:slugger, "~> 0.1.0"},
     ]
   end
 

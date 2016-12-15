@@ -26,6 +26,7 @@ defmodule Heart.Seeds do
   @num_offerings 15
   @num_goals 5
   @num_signals 10
+  @num_metrics 5
 
   def seed do
     offerings
@@ -45,7 +46,13 @@ defmodule Heart.Seeds do
 
   def goals do
     Factory.build_list(@num_goals, :goal, %{
-      signals: Factory.build_list(@num_signals, :signal)
+      signals: signals
+    })
+  end
+
+  def signals do
+    Factory.build_list(@num_signals, :signal, %{
+      metrics: Factory.build_list(@num_metrics, :metric)
     })
   end
 end

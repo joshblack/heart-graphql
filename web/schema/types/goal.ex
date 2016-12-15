@@ -9,13 +9,16 @@ defmodule Heart.Schema.Types.Goal do
 
   node object :goal do
     @desc "The title of the goal."
-    field :title, :string
+    field :title, non_null(:string)
 
     @desc "The description of the goal."
-    field :description, :string
+    field :description, non_null(:string)
+
+    @desc "The slug for the goal URL."
+    field :slug, non_null(:string)
 
     @desc "The offering that the goal belongs to."
-    field :offering, :offering, resolve: assoc(:offering)
+    field :offering, non_null(:offering), resolve: assoc(:offering)
 
     @desc "The signals that fall under a goal"
     connection field :signals, node_type: :signal do

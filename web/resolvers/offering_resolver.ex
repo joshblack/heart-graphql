@@ -24,6 +24,10 @@ defmodule Heart.Resolver.Offering do
     end
   end
 
+  def find(_args, _info) do
+    {:error, "No arguments supplied for `id` or `slug`."}
+  end
+
   def update(args, _info) do
     case Repo.get(Offering, args.id) do
       nil -> not_found(args.id)
