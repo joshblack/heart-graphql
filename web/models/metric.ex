@@ -10,6 +10,7 @@ defmodule Heart.Metric do
     field :description, :string
     field :target, :float
     field :slug, :string
+
     belongs_to :signal, Heart.Signal
 
     timestamps()

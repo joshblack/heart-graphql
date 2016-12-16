@@ -19,7 +19,10 @@ defmodule Heart.MetricSlugFieldTest do
     query = """
     {
       viewer {
-        metric(metricSlug: "#{metric.slug}", signalSlug: "#{metric.signal.slug}") {
+        metric(
+          metricSlug: "#{metric.slug}",
+          offeringSlug: "#{metric.signal.goal.offering.slug}"
+        ) {
           id
           name
           description

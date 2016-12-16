@@ -17,7 +17,7 @@ defmodule Heart.SignalSlugFieldTest do
     query = """
     {
       viewer {
-        signal(signalSlug: "#{signal.slug}", goalSlug: "#{signal.goal.slug}") {
+        signal(signalSlug: "#{signal.slug}", offeringSlug: "#{signal.goal.offering.slug}") {
           id
           title
           description

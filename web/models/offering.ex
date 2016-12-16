@@ -13,6 +13,7 @@ defmodule Heart.Offering do
     field :name, :string
     field :description, :string
     field :slug, :string
+
     has_many :goals, Heart.Goal
     belongs_to :organization, Heart.Organization
 

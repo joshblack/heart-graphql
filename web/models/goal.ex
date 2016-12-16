@@ -11,6 +11,7 @@ defmodule Heart.Goal do
     field :title, :string
     field :description, :string
     field :slug, :string
+
     has_many :signals, Heart.Signal
     belongs_to :offering, Heart.Offering
 

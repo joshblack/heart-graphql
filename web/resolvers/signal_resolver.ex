@@ -15,15 +15,15 @@ defmodule Heart.Resolver.Signal do
     end
   end
 
-  def find(%{signal_slug: signal, goal_slug: goal}, _info) do
+  def find(%{signal_slug: signal, offering_slug: offering}, _info) do
     query =
       from s in Signal,
       join: g in assoc(s, :goal),
-      where: s.slug == ^signal and g.slug == ^goal,
-      select: s
+      join: o in assoc(g, :offering),
+      where: s.slug == ^signal and o.slug == ^offering
 
     case Repo.one(query) do
-      nil -> {:error, "No Signal found for slug: #{signal}"}
+      nil -> {:error, "No Signal found for slug #{signal} in #{offering}"}
       signal -> {:ok, signal}
     end
   end

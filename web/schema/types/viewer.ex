@@ -48,8 +48,8 @@ defmodule Heart.Schema.Types.Viewer do
 
     field :signal, type: :signal do
       arg :id, :id
-      arg :goal_slug, :string
       arg :signal_slug, :string
+      arg :offering_slug, :string
 
       (&Signal.find/2)
       |> parsing_node_ids(id: :signal)
@@ -58,8 +58,8 @@ defmodule Heart.Schema.Types.Viewer do
 
     field :metric, type: :metric do
       arg :id, :id
-      arg :signal_slug, :string
       arg :metric_slug, :string
+      arg :offering_slug, :string
 
       (&Metric.find/2)
       |> parsing_node_ids(id: :metric)

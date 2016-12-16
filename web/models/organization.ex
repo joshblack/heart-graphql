@@ -13,6 +13,7 @@ defmodule Heart.Organization do
     field :name, :string
     field :description, :string
     field :slug, :string
+
     has_many :offerings, Heart.Offering
 
     timestamps()

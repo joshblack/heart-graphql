@@ -14,12 +14,13 @@ defmodule Heart.Resolver.Metric do
     end
   end
 
-  def find(%{signal_slug: signal, metric_slug: metric}, _info) do
+  def find(%{metric_slug: metric, offering_slug: offering}, _info) do
     query =
       from m in Metric,
       join: s in assoc(m, :signal),
-      where: s.slug == ^signal and m.slug == ^metric,
-      select: m
+      join: g in assoc(s, :goal),
+      join: o in assoc(g, :offering),
+      where: m.slug == ^metric and o.slug == ^offering
 
     case Repo.one(query) do
       nil -> {:error, "No Metric found for slug: #{metric}"}
