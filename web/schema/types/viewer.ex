@@ -19,7 +19,8 @@ defmodule Heart.Schema.Types.Viewer do
     end
 
     field :organization, type: :organization do
-      arg :id, non_null(:id)
+      arg :id, :id
+      arg :slug, :string
 
       (&Organization.find/2)
       |> parsing_node_ids(id: :organization)
@@ -27,7 +28,8 @@ defmodule Heart.Schema.Types.Viewer do
     end
 
     field :offering, type: :offering do
-      arg :id, non_null(:id)
+      arg :id, :id
+      arg :slug, :string
 
       (&Offering.find/2)
       |> parsing_node_ids(id: :offering)
@@ -35,7 +37,9 @@ defmodule Heart.Schema.Types.Viewer do
     end
 
     field :goal, type: :goal do
-      arg :id, non_null(:id)
+      arg :id, :id
+      arg :goal_slug, :string
+      arg :offering_slug, :string
 
       (&Goal.find/2)
       |> parsing_node_ids(id: :goal)
@@ -43,7 +47,9 @@ defmodule Heart.Schema.Types.Viewer do
     end
 
     field :signal, type: :signal do
-      arg :id, non_null(:id)
+      arg :id, :id
+      arg :goal_slug, :string
+      arg :signal_slug, :string
 
       (&Signal.find/2)
       |> parsing_node_ids(id: :signal)
@@ -51,7 +57,9 @@ defmodule Heart.Schema.Types.Viewer do
     end
 
     field :metric, type: :metric do
-      arg :id, non_null(:id)
+      arg :id, :id
+      arg :signal_slug, :string
+      arg :metric_slug, :string
 
       (&Metric.find/2)
       |> parsing_node_ids(id: :metric)

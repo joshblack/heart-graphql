@@ -2,7 +2,7 @@
 
 up:
 	@echo "Starting Development-related services"
-	docker-compose -f ci/dev/docker-compose.yml up -d
+	docker-compose -f ci/dev/docker-compose.yml up -d --build
 
 down:
 	@echo "Stop Development-related services"

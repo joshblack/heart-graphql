@@ -14,6 +14,26 @@ defmodule Heart.Resolver.Metric do
     end
   end
 
+  def find(%{signal_slug: signal, metric_slug: metric}, _info) do
+    query =
+      from m in Metric,
+      join: s in assoc(m, :signal),
+      where: s.slug == ^signal and m.slug == ^metric,
+      select: m
+
+    case Repo.one(query) do
+      nil -> {:error, "No Metric found for slug: #{metric}"}
+      metric -> {:ok, metric}
+    end
+  end
+
+  def find(_args, _info) do
+    {
+      :error,
+      "No arguments supplied for `id`, or for `metric_slug` and `signal_slug`."
+    }
+  end
+
   def create(args, _info) do
     changeset = Metric.changeset(%Metric{}, args)
 

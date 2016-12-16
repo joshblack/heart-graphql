@@ -24,6 +24,13 @@ defmodule Heart.Resolver.Offering do
     end
   end
 
+  def find(%{slug: slug}, _info) do
+    case Repo.get_by(Offering, slug: slug) do
+      nil -> {:error, "Offering slug #{slug} not found"}
+      org -> {:ok, org}
+    end
+  end
+
   def find(_args, _info) do
     {:error, "No arguments supplied for `id` or `slug`."}
   end

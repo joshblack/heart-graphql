@@ -24,8 +24,24 @@ defmodule Heart.Resolver.Goal do
     end
   end
 
+  def find(%{goal_slug: goal, offering_slug: offering}, _info) do
+    query =
+      from g in Goal,
+      join: o in assoc(g, :offering),
+      where: g.slug == ^goal and o.slug == ^offering,
+      select: g
+
+    case Repo.one(query) do
+      nil -> {:error, "No Goal found for slug: #{goal}"}
+      goal -> {:ok, goal}
+    end
+  end
+
   def find(_args, _info) do
-    {:error, "No arguments supplied for `id` or `slug`."}
+    {
+      :error,
+      "No arguments supplied for `id`, or for `goal_slug` and `offering_slug`."
+    }
   end
 
   def update(args, _info) do
