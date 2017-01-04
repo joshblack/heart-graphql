@@ -17,7 +17,8 @@ defmodule Heart.Schema.Mutations.Goal do
       end
 
       output do
-        field :goal, :goal
+        field :offering, :offering
+        field :new_goal_edge, :goal_edge
       end
 
       (&Goal.create/2)

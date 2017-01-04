@@ -3,16 +3,24 @@ defmodule Heart.Resolver.Offering do
   Provides the necessary resolvers for various Offering-related fields.
   """
 
-  use Heart.Web, :resolver
-
   alias Heart.Offering
   alias Absinthe.Relay.Connection
+
+  use Heart.Web, :resolver
+  use Heart.Relay.ConnectionHelper, repo: Heart.Repo, module: Offering
 
   def create(args, _info) do
     changeset = Offering.changeset(%Offering{}, args)
 
     case Repo.insert(changeset) do
-      {:ok, offering} -> {:ok, %{offering: offering}}
+      {:ok, offering} ->
+        offering = Repo.preload(offering, :organization)
+        payload =
+          Map.new()
+          |> Map.put(:organization, offering.organization)
+          |> Map.put(:new_organization_edge, get_edge_for(offering))
+
+        {:ok, payload}
       {:error, changeset} -> {:error, inspect(changeset)}
     end
   end
@@ -63,6 +71,7 @@ defmodule Heart.Resolver.Offering do
     connection =
       offering
       |> Ecto.assoc(:goals)
+      |> order_by(desc: :inserted_at)
       |> Connection.from_query(&Repo.all/1, pagination_args)
 
     {:ok, connection}

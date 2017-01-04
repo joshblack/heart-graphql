@@ -3,10 +3,11 @@ defmodule Heart.Resolver.Signal do
   Provides the necessary resolvers for various Signal-related fields.
   """
 
-  use Heart.Web, :resolver
-
   alias Heart.Signal
   alias Absinthe.Relay.Connection
+
+  use Heart.Web, :resolver
+  use Heart.Relay.ConnectionHelper, repo: Heart.Repo, module: Signal
 
   def find(%{id: id}, _info) do
     case Repo.get(Signal, id) do
@@ -39,7 +40,16 @@ defmodule Heart.Resolver.Signal do
     changeset = Signal.changeset(%Signal{}, args)
 
     case Repo.insert(changeset) do
-      {:ok, signal} -> {:ok, %{signal: signal}}
+      {:ok, signal} ->
+        signal = Repo.preload(signal, :goal)
+
+        {
+          :ok,
+          %{
+            goal: signal.goal,
+            new_signal_edge: get_edge_for(signal),
+          }
+        }
       {:error, changeset} -> {:error, inspect(changeset)}
     end
   end
@@ -72,6 +82,7 @@ defmodule Heart.Resolver.Signal do
     connection =
       signal
       |> Ecto.assoc(:metrics)
+      |> order_by(desc: :inserted_at)
       |> Connection.from_query(&Repo.all/1, pagination_args)
 
     {:ok, connection}

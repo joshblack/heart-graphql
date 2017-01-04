@@ -3,25 +3,33 @@ defmodule Heart.Resolver.Organization do
   Provides the necessary resolvers for various organization-related fields.
   """
 
-  use Heart.Web, :resolver
-
   alias Heart.Organization
   alias Absinthe.Relay.Connection
 
-  def all(pagination_args, _) do
-    case Repo.all(Organization) do
-      nil ->
-        {:error, "Something went wrong"}
-      organizations ->
-        # Note: the client _has_ to include connection arguments otherwise
-        # this throws
-        connection = Connection.from_list(
-          organizations,
-          pagination_args
-        )
+  use Heart.Web, :resolver
+  use Heart.Relay.ConnectionHelper, repo: Heart.Repo, module: Organization
 
-        {:ok, connection}
-    end
+  # def all(pagination_args = %{order_by: order, sort: sort}, _info) do
+    # query =
+      # from o in Organization,
+      # order_by: [{^sort, field(o, ^order)}]
+
+    # connection = Connection.from_query(query, &Repo.all/1, pagination_args)
+
+    # {:ok, connection}
+  # end
+
+  def all(pagination_args, _info) do
+    query =
+      from o in Organization,
+      order_by: [{:desc, o.inserted_at}]
+
+    %{edges: edges, page_info: page_info} =
+      Connection.from_query(query, &Repo.all/1, pagination_args)
+
+    total_count = Repo.one!(from o in Organization, select: count(o.id))
+
+    {:ok, %{edges: edges, page_info: page_info, total_count: total_count}}
   end
 
   def find(%{id: id}, _info) do
@@ -46,7 +54,15 @@ defmodule Heart.Resolver.Organization do
     changeset = Organization.changeset(%Organization{}, args)
 
     case Repo.insert(changeset) do
-      {:ok, organization} -> {:ok, %{organization: organization}}
+      {:ok, organization} ->
+        {
+          :ok,
+          %{
+            viewer: %{},
+            new_organization_edge: get_edge_for(organization)
+          }
+        }
+
       {:error, changeset} -> {:error, inspect(changeset)}
     end
   end
@@ -81,6 +97,7 @@ defmodule Heart.Resolver.Organization do
     connection =
       organization
       |> Ecto.assoc(:offerings)
+      |> order_by(desc: :inserted_at)
       |> Connection.from_query(&Repo.all/1, pagination_args)
 
     {:ok, connection}

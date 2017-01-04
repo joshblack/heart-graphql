@@ -6,7 +6,7 @@ defmodule Heart.Repo.Migrations.CreateGoal do
       add :id, :binary_id, primary_key: true
       add :title, :string
       add :description, :text
-      add :offering_id, references(:offerings, on_delete: :nothing, type: :binary_id)
+      add :offering_id, references(:offerings, on_delete: :delete_all, type: :binary_id)
 
       timestamps()
     end

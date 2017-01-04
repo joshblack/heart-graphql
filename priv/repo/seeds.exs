@@ -10,51 +10,94 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-defmodule Heart.Seeds do
-  @moduledoc """
-  Create a Custom Seeds module to utilize our Factories defined through
-  ExMachina and Seed our Database that way.
-  """
+alias Heart.Organization
+alias Heart.Offering
+alias Heart.Goal
+alias Heart.Signal
+alias Heart.Metric
 
-  use ExMachina.Ecto, repo: Heart.Repo
+organization = Organization.changeset(%Organization{}, %{
+  name: "IBM Watson",
+  description: "An organization within IBM"
+})
 
-  import Heart.Factory
+organization = Heart.Repo.insert!(organization)
 
-  alias Heart.Factory
+offering = Offering.changeset(%Offering{}, %{
+  name: "Watson Virtual Agent",
+  description: "An IBM Watson Offering.",
+  organization_id: organization.id,
+})
 
-  @num_organizations 5
-  @num_offerings 15
-  @num_goals 5
-  @num_signals 10
-  @num_metrics 5
+offering = Heart.Repo.insert!(offering)
 
-  def seed do
-    offerings
-    |> Enum.chunk(@num_offerings)
-    |> Enum.each(fn offering_slice ->
-      Factory.insert(:organization, %{
-        offerings: offering_slice,
-      })
-    end)
-  end
+goal = Goal.changeset(%Goal{}, %{
+  title: "Performance",
+  description: "Performance-related items.",
+  offering_id: offering.id,
+})
 
-  def offerings do
-    Factory.build_list(@num_offerings * @num_organizations, :offering, %{
-      goals: goals
-    })
-  end
+goal = Heart.Repo.insert!(goal)
 
-  def goals do
-    Factory.build_list(@num_goals, :goal, %{
-      signals: signals
-    })
-  end
+signal = Signal.changeset(%Signal{}, %{
+  title: "Browser",
+  description: "Browser-related performance items.",
+  goal_id: goal.id,
+})
 
-  def signals do
-    Factory.build_list(@num_signals, :signal, %{
-      metrics: Factory.build_list(@num_metrics, :metric)
-    })
-  end
-end
+signal = Heart.Repo.insert!(signal)
 
-Heart.Seeds.seed()
+metric = Metric.changeset(%Metric{}, %{
+  name: "Browser Request Time",
+  description: "How long it takes for the browser to complete a request.",
+  target: 3000,
+  signal_id: signal.id,
+})
+
+metric = Heart.Repo.insert!(metric)
+
+# defmodule Heart.Seeds do
+  # @moduledoc """
+  # Create a Custom Seeds module to utilize our Factories defined through
+  # ExMachina and Seed our Database that way.
+  # """
+
+  # use ExMachina.Ecto, repo: Heart.Repo
+
+  # import Heart.Factory
+
+  # alias Heart.Factory
+
+  # @num_organizations 5
+  # @num_offerings 15
+  # @num_goals 5
+  # @num_signals 10
+
+  # def seed do
+    # offerings
+    # |> Enum.chunk(@num_offerings)
+    # |> Enum.each(fn offering_slice ->
+      # Factory.insert(:organization, %{
+        # offerings: offering_slice,
+      # })
+    # end)
+  # end
+
+  # def offerings do
+    # Factory.build_list(@num_offerings * @num_organizations, :offering, %{
+      # goals: goals
+    # })
+  # end
+
+  # def goals do
+    # Factory.build_list(@num_goals, :goal, %{
+      # signals: signals
+    # })
+  # end
+
+  # def signals do
+    # Factory.build_list(@num_signals, :signal)
+  # end
+# end
+
+# Heart.Seeds.seed()

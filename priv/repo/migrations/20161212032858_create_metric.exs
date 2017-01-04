@@ -7,7 +7,7 @@ defmodule Heart.Repo.Migrations.CreateMetric do
       add :name, :string, null: false
       add :description, :text, null: false
       add :target, :float, null: false
-      add :signal_id, references(:signals, on_delete: :nothing, type: :binary_id), null: false
+      add :signal_id, references(:signals, on_delete: :delete_all, type: :binary_id), null: false
 
       timestamps()
     end

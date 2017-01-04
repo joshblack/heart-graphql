@@ -14,6 +14,12 @@ defmodule Heart.Schema.Types.Viewer do
   alias Heart.Resolver.Metric
 
   object :viewer do
+    field :id, type: non_null(:id) do
+      resolve fn _, _ ->
+        {:ok, "root_viewer_id"}
+      end
+    end
+
     connection field :organizations, node_type: :organization do
       resolve &Organization.all/2
     end

@@ -17,7 +17,8 @@ defmodule Heart.Schema.Mutations.Signal do
       end
 
       output do
-        field :signal, :signal
+        field :goal, :goal
+        field :new_signal_edge, :signal_edge
       end
 
       (&Signal.create/2)

@@ -17,7 +17,8 @@ defmodule Heart.Schema.Mutations.Organization do
       end
 
       output do
-        field :organization, :organization
+        field :viewer, :viewer
+        field :new_organization_edge, :organization_edge
       end
 
       resolve &Organization.create/2

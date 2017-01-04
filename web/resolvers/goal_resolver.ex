@@ -3,16 +3,26 @@ defmodule Heart.Resolver.Goal do
   Provides the necessary resolvers for various Goal-related fields.
   """
 
-  use Heart.Web, :resolver
-
   alias Heart.Goal
   alias Absinthe.Relay.Connection
+
+  use Heart.Web, :resolver
+  use Heart.Relay.ConnectionHelper, repo: Heart.Repo, module: Goal
 
   def create(args, _info) do
     changeset = Goal.changeset(%Goal{}, args)
 
     case Repo.insert(changeset) do
-      {:ok, goal} -> {:ok, %{goal: goal}}
+      {:ok, goal} ->
+        goal = Repo.preload(goal, :offering)
+
+        {
+          :ok,
+          %{
+            offering: goal.offering,
+            new_goal_edge: get_edge_for(goal),
+          }
+        }
       {:error, changeset} -> {:error, inspect(changeset)}
     end
   end
@@ -72,6 +82,7 @@ defmodule Heart.Resolver.Goal do
     connection =
       goal
       |> Ecto.assoc(:signals)
+      |> order_by(desc: :inserted_at)
       |> Connection.from_query(&Repo.all/1, pagination_args)
 
     {:ok, connection}

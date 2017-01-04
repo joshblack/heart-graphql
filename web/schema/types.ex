@@ -13,4 +13,5 @@ defmodule Heart.Schema.Types do
   import_types Heart.Schema.Types.Goal
   import_types Heart.Schema.Types.Signal
   import_types Heart.Schema.Types.Metric
+  import_types Heart.Schema.Types.Enums
 end

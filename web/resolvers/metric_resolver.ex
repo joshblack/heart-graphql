@@ -3,9 +3,10 @@ defmodule Heart.Resolver.Metric do
   Provides the necessary resolvers for various Metric-related fields.
   """
 
-  use Heart.Web, :resolver
-
   alias Heart.Metric
+
+  use Heart.Web, :resolver
+  use Heart.Relay.ConnectionHelper, repo: Heart.Repo, module: Metric
 
   def find(%{id: id}, _info) do
     case Repo.get(Metric, id) do
@@ -36,11 +37,24 @@ defmodule Heart.Resolver.Metric do
   end
 
   def create(args, _info) do
+    IO.inspect args
+
     changeset = Metric.changeset(%Metric{}, args)
 
     case Repo.insert(changeset) do
-      {:ok, metric} -> {:ok, %{metric: metric}}
-      {:error, changeset} -> {:error, inspect(changeset)}
+      {:ok, metric} ->
+        metric = Repo.preload(metric, :signal)
+
+        {
+          :ok,
+          %{
+            signal: metric.signal,
+            new_metric_edge: get_edge_for(metric),
+          }
+        }
+      {:error, changeset} ->
+        IO.inspect(changeset)
+        {:error, inspect(changeset)}
     end
   end
 

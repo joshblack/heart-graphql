@@ -18,7 +18,8 @@ defmodule Heart.Schema.Mutations.Offering do
       end
 
       output do
-        field :offering, :offering
+        field :organization, :organization
+        field :new_offering_edge, :offering_edge
       end
 
       (&Offering.create/2)

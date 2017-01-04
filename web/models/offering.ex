@@ -15,6 +15,8 @@ defmodule Heart.Offering do
     field :slug, :string
 
     has_many :goals, Heart.Goal
+    has_many :signals, through: [:goals, :signals]
+    has_many :metrics, through: [:goals, :signals, :metrics]
     belongs_to :organization, Heart.Organization
 
     timestamps()

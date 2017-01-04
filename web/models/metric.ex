@@ -11,7 +11,9 @@ defmodule Heart.Metric do
     field :target, :float
     field :slug, :string
 
+    # TODO: Metrics <-> Offering (many-to-many)
     belongs_to :signal, Heart.Signal
+    has_many :events, Heart.Event
 
     timestamps()
   end

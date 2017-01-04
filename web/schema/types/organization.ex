@@ -1,8 +1,7 @@
 defmodule Heart.Schema.Types.Organization do
   @moduledoc """
   Provides an Organization Type for use in a GraphQL Schema.
-  """
-
+  """ 
   use Heart.Web, :type
 
   alias Heart.Resolver.Organization
@@ -20,11 +19,18 @@ defmodule Heart.Schema.Types.Organization do
     @desc "The slug for the organization URL."
     field :slug, non_null(:string)
 
+    field :inserted_at, non_null(:string)
+
     @desc "The offerings that fall under this organization."
     connection field :offerings, node_type: :offering do
       resolve &Organization.offerings/2
     end
   end
 
-  connection node_type: :organization
+  connection node_type: :organization do
+    field :total_count, :integer
+
+    edge do
+    end
+  end
 end

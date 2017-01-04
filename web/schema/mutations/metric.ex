@@ -18,7 +18,8 @@ defmodule Heart.Schema.Mutations.Metric do
       end
 
       output do
-        field :metric, :metric
+        field :signal, :signal
+        field :new_metric_edge, :metric_edge
       end
 
       (&Metric.create/2)
